@@ -1,0 +1,195 @@
+html {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+[data-bs-theme="light"] {
+  --state-bg-color: #eee;
+  --state-outline-color: #000;
+  --state-text-color: #000;
+  --highlighted-state-bg-color: lightgreen;
+  --highlighted-state-outline-color: green;
+  --highlighted-state-text-color: green;
+  --transition-label-text-color: #000;
+  --transition-label-bg-color: #dcdcdce6;
+}
+
+[data-bs-theme="dark"] {
+  --state-bg-color: #212529;
+  --state-outline-color: #000;
+  --state-text-color: #dee2e6;
+  --highlighted-state-bg-color: lightgreen;
+  --highlighted-state-outline-color: green;
+  --highlighted-state-text-color: green;
+  --transition-label-bg-color: #212529;
+  --transition-label-text-color: #dee2e6;
+}
+
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.bi {
+  width: 1em;
+  height: 1em;
+  vertical-align: -.125em;
+  fill: currentcolor;
+}
+
+div.panel {
+  background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity));
+}
+
+/* Layout */
+
+#main-container {
+  margin: 0;
+  padding: 0;
+  height: calc(100vh - 59px);
+  display: flex;
+}
+
+#toolbox-wrapper {
+  width: 195px;
+  height: calc(100vh - 67px);
+  margin: 5px 0 5px 5px;
+  padding: 12px;
+  float: left;
+  border-radius: 3px;
+}
+
+#right-column {
+  width: calc(100% - 210px);
+  height: calc(100vh - 67px);
+  display: inline-block;
+  margin: 5px;
+}
+
+#diagram {
+  height: 100%;
+  position: relative;
+  color: black;
+}
+
+#diagram-wrapper {
+  height: calc(100% - 50px);
+  border-radius: 3px;
+}
+
+#tape-wrapper {
+  width: 100%;
+  height: 45px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  line-height: 45px;
+  text-align: center;
+}
+
+#tape-wrapper #middle:not(:empty) {
+  font-weight: bold;
+  border: 1px solid gray;
+  padding: 5px;
+}
+
+#welcome-message {
+  display: none;
+  text-align: center;
+  color: #888;
+}
+
+#diagram:not(:has(div)) #welcome-message {
+  display: block;
+}
+
+/* Toolbox */
+
+#toolbox-wrapper label {
+  font-size: 13px;
+}
+
+#toolbox-wrapper input {
+  font-size: 14px;
+}
+
+/* Controls (state nodes) */
+
+.control {
+  border-radius: 100%;
+  border: 1px solid var(--state-outline-color);
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  line-height: 64px;
+  cursor: move;
+  background-color: var(--state-bg-color);
+  position: absolute;
+  color: var(--state-text-color)
+}
+
+.control.highlighted {
+  border-color: var(--highlighted-state-outline-color);
+  outline-color: var(--highlighted-state-outline-color) !important;
+  color: var(--highlighted-state-text-color);
+  background-color: var(--highlighted-state-bg-color);
+}
+
+.control.accepting {
+  outline: 1px solid var(--state-outline-color);
+  outline-offset: -8px;
+}
+
+.control.starting {
+  border-style: dashed;
+  border-width: 3px !important;
+}
+
+/* Other JsPlumb elements */
+
+.window {
+  z-index: 20;
+}
+
+.jtk-connector {
+  z-index: 4;
+}
+
+.jtk-endpoint {
+  z-index: 5;
+}
+
+.jtk-overlay {
+  z-index: 6;
+  color: var(--transition-label-text-color);
+  background-color: var(--transition-label-bg-color);
+  padding: 2px 5px;
+  border-radius: 50vh;
+}
+
+/* Context menu */
+
+.context-menu {
+  position: absolute;
+  display: none;
+  z-index: 3000;
+}
+
+.context-menu .btn:not(:hover) {
+  background-color: rgb(var(--bs-tertiary-bg-rgb))
+}
+
+/* Buttons */
+
+.btn {
+  transition-duration: 0s;
+}
+
+/* Tooltips */
+
+.custom-tool-tip {
+  font-size: 13px;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Mealy State Machine Simulator</title>
+    <meta charset="utf-8">
+    <meta name="title" content="Mealy State Machine Simulator">
+    <meta name="description" content="Visually create and simulate the operation of State Machine  step-by-step.">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/color-modes.js"></script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand bg-body-tertiary border-bottom">
+      <div class="container-fluid">
+        <!-- Brand title -->
+        <a class="navbar-brand" href="index.html">Mealy State Machine Simulator</a>
+        <ul class="navbar-nav justify-content-end ms-auto">
+          
+          <!-- Vertical rule -->
+          <li class="nav-item py-1">
+            <div class="vr d-flex h-100 mx-2"></div>
+          </li>
+          <!-- Theme toggle -->
+          <li class="nav-item dropdown">
+            <button class="btn btn-link nav-link py-2 px-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+              <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+              <span class="d-none ms-2" id="bd-theme-text">Toggle theme</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+              <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="true">
+                  <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+                  Light
+                  <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                  <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+                  Dark
+                  <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="false">
+                  <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+                  Auto
+                  <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+                </button>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- SVG Icons for theme toggle dropdown -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="circle-half" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+          <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+          <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+          <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </symbol>
+      </svg>
+    </nav>
+    
+    <!-- Main container -->
+    <div id="main-container">
+      <!-- Toolbox for inputs and interraction with State Machine -->
+      <div id="toolbox-wrapper" class="bg-body-tertiary border">
+        <!-- Enter input string for State Machine -->
+        <label for="enter-string">Enter string</label>
+        <a class="custom-tool-tip " href="#" data-bs-toggle="tooltip" data-bs-title="Enter a string to be read the State Machine. This string can be used for step-by-step simulation.">(?)</a>
+        <input class="w-100 form-control" id="enter-string" type="text">
+        <!-- Simulation controls (stop simulation, and next step) -->
+        <label for="simulator">Simulation controls</label>
+        <a class="custom-tool-tip" href="#" data-bs-toggle="tooltip" data-bs-title="Stop will cancel the simulation and reset. Start will initialise the simulation with the string entered above. Skip-next will read a character from the input and transition to the next states if possible.">(?)</a>
+        <div class="btn-group-vertical">
+          <div class="btn-group w-100" role="group" aria-label="simulator">
+            <button class="btn btn-outline-primary" id="stop-simulation" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-fill" viewBox="0 0 16 16">
+                <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5"/>
+              </svg>
+            </button>
+            <button class="btn btn-outline-primary" id="start-simulation">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+              </svg>
+            </button>
+            <button class="btn btn-outline-primary" id="step-simulation" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-forward-fill" viewBox="0 0 16 16">
+                <path d="M3 2l9 6-9 6V2zm10 0v12h2V2h-2z"/>
+              </svg>
+            </button>
+          </div>
+          <input class="rounded-0 rounded-bottom w-100 form-control" id="simulation-output" type="text" value="" disabled>          
+        </div>
+      </div>
+      <!-- Diagram/canvas for the visualisation of the automaton -->
+      <div id="right-column">
+        <div id="tape-wrapper" class="bg-body-tertiary border">
+          <span id="start"></span>
+          <span id="middle"></span>
+          <span id="end"></span>
+        </div>
+        <div id="diagram-wrapper" class="bg-body-tertiary border">
+          <div id="diagram">
+            <span id="welcome-message">
+              Right-click anywhere here to get started!
+              <br>
+              1. Create state elements by right clicking -> Create State.
+              <br>
+              2. Create transitions by dragging the grey dot of a source state to the target state.
+              <br>
+              3. Set a starting state by right clicking on a state -> Make Starting State.
+              <br>
+              4. Update or delete any transitions or states, if needed, through the right click menu.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Context menu for right-clicking on automaton states -->
+    <div id="state-context-menu" class="context-menu">
+      <div class="btn-group-vertical">
+        <button class="btn btn-outline-primary btn-sm delete-state">Delete State</button>
+        <button class="btn btn-outline-primary btn-sm rename-state">Rename State</button>
+        <button class="btn btn-outline-primary btn-sm make-starting-state">Make Starting State</button>
+      </div>
+    </div>
+    
+    <!-- Context menu for right-clicking on automaton transitions -->
+    <div id="transition-context-menu" class="context-menu">
+      <div class="btn-group-vertical">
+        <button class="btn btn-outline-primary btn-sm delete-transition">Delete Transition</button>
+        <button class="btn btn-outline-primary btn-sm edit-transition">Edit Transition</button>
+      </div>
+    </div>
+
+    <!-- Context menu for right-clicking on an empty part of the diagram -->
+    <div id="body-context-menu" class="context-menu">
+      <div class="btn-group-vertical">
+        <button class="btn btn-outline-primary btn-sm create-state">Create State</button>
+      </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+    <script src="js/jsplumb.min.js"></script>
+    <script src="js/Mealy.js"></script>
+    <script src="js/Mealy_main.js"></script>
+  </body>
+</html>
